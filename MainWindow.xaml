@@ -9,8 +9,8 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <HeaderedContentControl Grid.Row="0">
