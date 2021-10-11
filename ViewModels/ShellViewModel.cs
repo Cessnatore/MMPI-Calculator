@@ -10,43 +10,31 @@ namespace MMPI_Calculator.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        private string _firstName;
-        private string _lastName;
+        public BindableCollection<QuestionModel> Questions { get; set; }
+        public List<SubsetModel> Subsets { get; set; }
 
-        public string FirstName
+        public ShellViewModel()
         {
-            get
-            {
-                return _firstName;
-            }
-            set
-            {
-                _firstName = value;
-                NotifyOfPropertyChange(() => FirstName);
-                NotifyOfPropertyChange(() => FullName);
-            }
-        }
+            DataRetriever retriever = new CSVDataRetriever();
 
-        public string LastName
-        {
-            get { return _lastName; }
-            set
-            {
-                _lastName = value;
-                NotifyOfPropertyChange(() => LastName);
-                NotifyOfPropertyChange(() => FullName);
-            }
-        }
-
-        public string FullName
-        {
-            get { return $"{FirstName} {LastName}"; }
+            List<QuestionModel> questions = retriever.GetQuestions();
+            Questions = new BindableCollection<QuestionModel>(questions);
+            Subsets = retriever.GetSubsets(questions);
         }
 
         public void GenerateReport()
         {
-            FirstName = "";
-            LastName = "";
+            foreach (QuestionModel question in Questions)
+            {
+                if (question.Contributes())
+                {
+                    foreach (int subsetId in question.SubsetsIDs)
+                    {
+                        Subsets.Find(s => s.Id == subsetId).Score++;
+                    }
+                }
+            }
+            System.Windows.MessageBox.Show(Subsets.First().Score.ToString());          
         }
     }
 }

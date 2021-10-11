@@ -41,8 +41,17 @@ namespace MMPI_Calculator
             using (StreamReader reader = new(QuestionDirectory))
             using (CsvReader csv = new(reader, CultureInfo.InvariantCulture))
             {
-
                 questions = csv.GetRecords<QuestionModel>().ToList();
+            }
+            using (StreamReader reader = new(SubsetQuestionsDirectory))
+            using (CsvReader csv = new(reader, CultureInfo.InvariantCulture))
+            {
+                List<SubsetQuestions> subsetQuestions = csv.GetRecords<SubsetQuestions>().ToList();
+
+                foreach (SubsetQuestions sq in subsetQuestions)
+                {
+                    questions.Find(q => q.Id == sq.QuestionId).SubsetsIDs.Add(sq.SubsetId);
+                }
             }
             return questions;
         }
@@ -50,6 +59,7 @@ namespace MMPI_Calculator
         public override List<SubsetModel> GetSubsets(List<QuestionModel> questions)
         {
             List<SubsetModel> subsets = new();
+
 
             //hacer dinamico
             using (StreamReader reader = new(SubsetDirectory))
@@ -61,6 +71,7 @@ namespace MMPI_Calculator
             using (StreamReader reader = new(SubsetQuestionsDirectory))
             using (CsvReader csv = new(reader, CultureInfo.InvariantCulture))
             {
+                
                 List<SubsetQuestions> subsetQuestions = csv.GetRecords<SubsetQuestions>().ToList();
 
                 foreach (SubsetQuestions sq in subsetQuestions)

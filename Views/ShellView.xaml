@@ -29,11 +29,30 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <!--Row 1-->
-        <TextBlock Text="{Binding Path=FullName, Mode=OneWay}" Grid.Row="1" Grid.Column="1"/>
         <Button Grid.Row="1" Grid.Column="5" MinHeight="50" MinWidth="100" x:Name="GenerateReport" Content="Generate Report"/>
         <!--Row 2-->
-        <TextBox MinWidth="100" Grid.Row="2" Grid.Column="1" x:Name="FirstName"/>
-        <TextBox MinWidth="100" Grid.Row="2" Grid.Column="2" x:Name="LastName"/>
+        <DataGrid x:Name="Questions" 
+                  Grid.Row="2" Grid.ColumnSpan="6" AlternatingRowBackground="LightSalmon"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Binding="{Binding Path = Id }"/>
+                <DataGridTextColumn Header="Content" Binding="{Binding Path = Content}"/>
+                <DataGridTemplateColumn Header="Value">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Value}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Path=Values}" SelectedItem="{Binding Path=Value}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+                        
+        </DataGrid>
         <!--Row 3-->
         <!--Row 4-->
         <!--Row 5-->
