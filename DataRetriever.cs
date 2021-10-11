@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using MMPI_Calculator.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,34 +28,34 @@ namespace MMPI_Calculator
             public int SubsetId { get; set; }
             public int QuestionId { get; set; }
         }
-        abstract public List<Question> GetQuestions();
-        abstract public List<Subset> GetSubsets(List<Question> questions);
+        abstract public List<QuestionModel> GetQuestions();
+        abstract public List<SubsetModel> GetSubsets(List<QuestionModel> questions);
     }
 
     class CSVDataRetriever : DataRetriever
     {
-        public override List<Question> GetQuestions()
+        public override List<QuestionModel> GetQuestions()
         {
-            List<Question> questions = new();
+            List<QuestionModel> questions = new();
             //hacer dinamico
             using (StreamReader reader = new(QuestionDirectory))
             using (CsvReader csv = new(reader, CultureInfo.InvariantCulture))
             {
 
-                questions = csv.GetRecords<Question>().ToList();
+                questions = csv.GetRecords<QuestionModel>().ToList();
             }
             return questions;
         }
 
-        public override List<Subset> GetSubsets(List<Question> questions)
+        public override List<SubsetModel> GetSubsets(List<QuestionModel> questions)
         {
-            List<Subset> subsets = new();
+            List<SubsetModel> subsets = new();
 
             //hacer dinamico
             using (StreamReader reader = new(SubsetDirectory))
             using (CsvReader csv = new(reader, CultureInfo.InvariantCulture))
             {
-                subsets = csv.GetRecords<Subset>().ToList();
+                subsets = csv.GetRecords<SubsetModel>().ToList();
             }
 
             using (StreamReader reader = new(SubsetQuestionsDirectory))

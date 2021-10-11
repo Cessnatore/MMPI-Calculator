@@ -1,9 +1,13 @@
 ﻿using CsvHelper.Configuration.Attributes;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MMPI_Calculator
+namespace MMPI_Calculator.Models
 {
-    public class Question
+    class QuestionModel
     {
         public int Id { get; set; }
         public string Content { get; set; }
@@ -15,7 +19,7 @@ namespace MMPI_Calculator
         [BooleanFalseValues("FALSE")]
         public bool Control { get; set; }
 
-        public Question(int Id, string Content, bool Control)
+        public QuestionModel(int Id, string Content, bool Control)
         {
             this.Id = Id; this.Content = Content; this.Control = Control; Value = "";
         }
@@ -27,7 +31,7 @@ namespace MMPI_Calculator
             bool answer;
             if (Value != "")
             {
-                bool actualValue = Boolean.Parse(Value);
+                bool actualValue = bool.Parse(Value);
                 answer = (actualValue == Control) && Control;
             }
             else

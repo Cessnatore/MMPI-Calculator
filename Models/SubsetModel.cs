@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using CsvHelper.Configuration.Attributes;
+﻿using System.Collections.Generic;
 
-namespace MMPI_Calculator
+namespace MMPI_Calculator.Models
 {
-    public class Subset
+    class SubsetModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Question> Questions { get; set; }
+        public List<QuestionModel> Questions { get; set; }
 
-        public Subset()
+        public SubsetModel()
         {
             Questions = new();
         }
@@ -19,11 +16,12 @@ namespace MMPI_Calculator
         public int CalculateSubset()
         {
             int score = 0;
-            foreach (Question question in Questions)
+            foreach (QuestionModel question in Questions)
             {
                 if (question.Contributes()) score++;
             }
             return score;
         }
+
     }
 }

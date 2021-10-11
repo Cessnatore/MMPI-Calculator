@@ -28,6 +28,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="FirstName" Grid.Row="1" Grid.Column="1"/>
+        <!--Row 1-->
+        <TextBlock Text="{Binding Path=FullName, Mode=OneWay}" Grid.Row="1" Grid.Column="1"/>
+        <Button Grid.Row="1" Grid.Column="5" MinHeight="50" MinWidth="100" x:Name="GenerateReport" Content="Generate Report"/>
+        <!--Row 2-->
+        <TextBox MinWidth="100" Grid.Row="2" Grid.Column="1" x:Name="FirstName"/>
+        <TextBox MinWidth="100" Grid.Row="2" Grid.Column="2" x:Name="LastName"/>
+        <!--Row 3-->
+        <!--Row 4-->
+        <!--Row 5-->
+        <!--Row 6-->
     </Grid>
 </Window>
